@@ -1,0 +1,23 @@
+# .gitignore para el Proyecto ERP Escolar
+
+# Archivos de Base de Datos Locales
+*.sqlite
+*.db
+*.sqlite-journal
+
+# Directorio de Archivos Subidos Localmente (Logos y fotos de prueba)
+uploads/*
+!uploads/.gitkeep
+
+# Java / Maven build files
+target/
+*.class
+.mvn/
+.idea/
+.vscode/
+*.iml
+
+# Sistema y temporales
+.DS_Store
+Thumbs.db
+*.log
