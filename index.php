@@ -7,269 +7,433 @@ $isGuest = !Auth::check();
 
 if ($isGuest):
     // -------------------------------------------------------------
-    // PREPA ANÁHUAC STYLE GUEST LANDING PAGE IN EMERALD GREEN
+    // ENFANT THEME STYLE GUEST LANDING PAGE (Premium Clone - SPANISH)
     // -------------------------------------------------------------
     $db = Database::getInstance()->getConnection();
-    
-    // Fetch recent news/blog posts for guests
     try {
-        $newsList = $db->query("SELECT * FROM news ORDER BY id DESC LIMIT 4")->fetchAll();
+        $newsList = $db->query("SELECT * FROM news ORDER BY id DESC LIMIT 3")->fetchAll();
     } catch (Exception $e) {
         $newsList = [];
     }
-
-    // Fetch teachers for the showcase
-    try {
-        $teachers = $db->query("
-            SELECT t.*, u.first_name, u.last_name, u.email 
-            FROM teachers t
-            JOIN users u ON t.user_id = u.id
-            ORDER BY u.id ASC LIMIT 12
-        ")->fetchAll();
-    } catch (Exception $e) {
-        $teachers = [];
-    }
 ?>
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-white">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIENVENIDO A NUESTRO PORTAL ESCOLAR</title>
+    <title>Enfant. | Escuela Primaria</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        enfantBlue: '#0b2038',
+                        enfantOrange: '#fc5c4c',
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Outfit', sans-serif; }
-        .font-heading { font-family: 'Montserrat', sans-serif; }
-        .carousel-item { display: none; }
-        .carousel-item.active { display: block; animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        .bg-hex-pattern {
+            background-color: #f8f9fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.03' fill='%230b2038' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .hero-overlay {
+            background: rgba(11, 32, 56, 0.4);
         }
     </style>
 </head>
-<body class="bg-white text-slate-800">
-    <!-- Sophisticated Clean Header Exactly Like the User's Image Example -->
-    <header class="sticky top-0 z-50 bg-white border-b border-slate-100 shadow-sm animate-fade-in">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Left Side Logo -->
-            <div class="flex items-center space-x-3 select-none">
-                <div class="w-12 h-12 bg-gradient-to-tr from-emerald-600 to-emerald-500 rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-md shadow-emerald-500/20">
-                    <i class="fa-solid fa-graduation-cap"></i>
+<body class="text-gray-600 antialiased font-sans bg-white">
+
+    <!-- Top Bar -->
+    <div class="bg-enfantBlue text-white text-xs py-3 hidden md:block">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="font-bold text-xl tracking-tighter">enfant<span class="text-enfantOrange">.</span></span>
+            </div>
+            <div class="flex items-center space-x-10">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-regular fa-compass text-2xl font-light"></i>
+                    <div>
+                        <p><span class="text-enfantOrange font-bold">ENCUÉNTRANOS:</span> Londres, Reino Unido</p>
+                        <p class="text-gray-300">12-14 Kensington High Street</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-lg font-black tracking-tight text-slate-900 font-heading leading-none">PORTAL ESCOLAR</h1>
-                    <span class="text-xs text-emerald-600 font-bold uppercase tracking-wider">Liderazgo & Excelencia</span>
+                <div class="flex items-center space-x-3">
+                    <i class="fa-regular fa-clock text-2xl font-light"></i>
+                    <div>
+                        <p><span class="text-enfantOrange font-bold">HORARIO:</span> 09:00 - 17:00</p>
+                        <p class="text-gray-300">Sábados y Domingos - Cerrado</p>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Navigation Links - Exactly as WP / Prepa Anáhuac Example -->
-            <nav class="hidden lg:flex items-center space-x-8 text-xs font-extrabold uppercase tracking-widest text-slate-500">
-                <a href="#nosotros" class="hover:text-emerald-600 transition">Nosotros</a>
-                <a href="#experiencia" class="hover:text-emerald-600 transition">Experiencia</a>
-                <a href="#facultad" class="hover:text-emerald-600 transition">Facultad</a>
-                <a href="#noticias" class="hover:text-emerald-600 transition">Blog</a>
+    <!-- Main Navigation Header -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <!-- Mobile Logo -->
+            <div class="md:hidden flex items-center space-x-2">
+                <span class="font-bold text-2xl text-enfantBlue tracking-tighter">enfant<span class="text-enfantOrange">.</span></span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex flex-1 justify-center space-x-8 text-[13px] font-bold text-enfantBlue">
+                <a href="/" class="hover:text-enfantOrange transition flex items-center">Inicio</a>
+                <a href="#services" class="hover:text-enfantOrange transition flex items-center">Nuestra Institución <i class="fa-solid fa-angle-down ml-1 text-[10px]"></i></a>
+                <a href="#contact" class="hover:text-enfantOrange transition flex items-center">Contacto</a>
+                <a href="/admissions.php" class="hover:text-enfantOrange transition flex items-center bg-enfantOrange/10 px-3 py-1 rounded-full text-enfantOrange">Admisiones / Aplicar</a>
+                <a href="/auth/login.php" class="hover:text-enfantOrange transition flex items-center"><i class="fa-solid fa-lock mr-2 text-gray-400"></i> Mi Portal</a>
             </nav>
 
-            <!-- Right Side CTA Hub+ button -->
-            <div class="flex items-center space-x-4">
-                <a href="/auth/login.php" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.03] text-white font-black rounded-xl transition text-xs tracking-widest uppercase shadow-lg shadow-emerald-500/30">Hub+</a>
+            <!-- Icons Right -->
+            <div class="flex items-center space-x-6 text-enfantBlue border-l border-gray-200 pl-6 h-10">
+                <a href="/auth/login.php" class="hover:text-enfantOrange transition"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="/auth/login.php" class="hover:text-enfantOrange transition relative">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="absolute -top-2 -right-2 bg-enfantOrange text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                </a>
             </div>
         </div>
     </header>
 
-    <!-- Content with premium Bento Grid / Photo Collage (Exactly like User Example) -->
-    <main class="max-w-7xl mx-auto px-6 py-12 md:py-16 space-y-24">
+    <!-- Hero Section (Carousel) -->
+    <div class="relative h-[600px] w-full overflow-hidden" id="hero-carousel">
         
-        <!-- Hero Grid Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[500px]">
-            <!-- Left Information Details (WordPress style) -->
-            <div class="lg:col-span-5 space-y-8 animate-fade-in">
-                <div class="space-y-4">
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-black font-heading text-slate-900 tracking-tight leading-tight">
-                        BIENVENIDO A <br><span class="text-emerald-600">NUESTRA ACADEMIA</span>
-                    </h2>
-                    <p class="text-base md:text-lg font-bold text-slate-700 leading-relaxed max-w-lg">
-                        Formamos a líderes como tú. Líderes que impactarán positivamente a la sociedad y en el mundo por medio de la innovación, creatividad, valores y fe.
+        <!-- Slide 1 -->
+        <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-100 slide">
+            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1200" alt="Niños en clase" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 hero-overlay"></div>
+            <div class="absolute inset-0 z-10 flex items-center">
+                <div class="max-w-7xl mx-auto px-6 w-full text-white">
+                    <div class="max-w-2xl">
+                        <h2 class="text-2xl md:text-3xl font-heading font-normal uppercase tracking-widest mb-4">Escuela Primaria Enfant</h2>
+                        <h1 class="text-4xl md:text-6xl font-heading font-bold mb-8 leading-tight">ESTAMOS HACIENDO EL<br>MUNDO DE CADA NIÑO MEJOR</h1>
+                        <a href="/auth/login.php" class="inline-block bg-enfantOrange hover:bg-opacity-90 text-white font-bold text-[13px] px-8 py-3.5 rounded-full uppercase tracking-wider transition">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 slide">
+            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200" alt="Educación de calidad" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 hero-overlay"></div>
+            <div class="absolute inset-0 z-10 flex items-center">
+                <div class="max-w-7xl mx-auto px-6 w-full text-white">
+                    <div class="max-w-2xl">
+                        <h2 class="text-2xl md:text-3xl font-heading font-normal uppercase tracking-widest mb-4">Educación de Primer Nivel</h2>
+                        <h1 class="text-4xl md:text-6xl font-heading font-bold mb-8 leading-tight">PREPARÁNDOLOS PARA<br>EL FUTURO</h1>
+                        <a href="/auth/login.php" class="inline-block bg-enfantOrange hover:bg-opacity-90 text-white font-bold text-[13px] px-8 py-3.5 rounded-full uppercase tracking-wider transition">Descubre Más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 slide">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200" alt="Aprendiendo juntos" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 hero-overlay"></div>
+            <div class="absolute inset-0 z-10 flex items-center">
+                <div class="max-w-7xl mx-auto px-6 w-full text-white">
+                    <div class="max-w-2xl">
+                        <h2 class="text-2xl md:text-3xl font-heading font-normal uppercase tracking-widest mb-4">Desarrollo Integral</h2>
+                        <h1 class="text-4xl md:text-6xl font-heading font-bold mb-8 leading-tight">APRENDIENDO JUNTOS<br>CADA DÍA</h1>
+                        <a href="/auth/login.php" class="inline-block bg-enfantOrange hover:bg-opacity-90 text-white font-bold text-[13px] px-8 py-3.5 rounded-full uppercase tracking-wider transition">Únete Hoy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm transition" onclick="prevSlide()">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm transition" onclick="nextSlide()">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Script for Carousel -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        let slideInterval;
+        
+        function showSlide(index) {
+            slides.forEach(slide => {
+                slide.classList.remove('opacity-100');
+                slide.classList.add('opacity-0');
+            });
+            slides[index].classList.remove('opacity-0');
+            slides[index].classList.add('opacity-100');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+            resetInterval();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+            resetInterval();
+        }
+        
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 6000);
+        }
+        
+        // Auto advance every 6 seconds
+        slideInterval = setInterval(nextSlide, 6000);
+    </script>
+
+    <!-- Our Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-heading font-normal text-gray-500 uppercase tracking-widest mb-2">Nuestros Servicios</h2>
+                <p class="text-gray-500 text-lg font-light">Hacemos a tu hijo feliz día tras día</p>
+                <div class="flex items-center justify-center mt-4">
+                    <div class="w-12 h-[1px] bg-gray-300"></div>
+                    <div class="w-3 h-3 rounded-full border-2 border-enfantOrange mx-2"></div>
+                    <div class="w-12 h-[1px] bg-gray-300"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <!-- Left Column: Daily Care -->
+                <div class="lg:col-span-4">
+                    <h3 class="text-xl font-heading font-normal text-gray-500 uppercase tracking-widest mb-2">Nuestro Cuidado Diario</h3>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-6">Educación popular para tu hijo</p>
+                    <p class="text-gray-500 leading-relaxed mb-6">
+                        Una educación integral y balanceada para el desarrollo óptimo de las capacidades cognitivas y sociales de sus hijos. Fomentamos un entorno de respeto, creatividad y excelencia académica.
                     </p>
+                    <ul class="space-y-2 mb-8 text-gray-500 text-[15px]">
+                        <li class="flex items-center"><i class="fa-solid fa-check-circle text-enfantOrange mr-3"></i> Programa de aprendizaje extraescolar</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check-circle text-enfantOrange mr-3"></i> Experimentos científicos</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check-circle text-enfantOrange mr-3"></i> Entorno de aprendizaje positivo</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check-circle text-enfantOrange mr-3"></i> Aprender jugando</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check-circle text-enfantOrange mr-3"></i> Atención individual y personalizada</li>
+                    </ul>
+                    <a href="#enrollment" class="inline-block border border-enfantOrange text-enfantOrange hover:bg-enfantOrange hover:text-white px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition">Más Info</a>
                 </div>
 
-                <div>
-                    <a href="/auth/register.php" class="inline-block px-7 py-4 bg-emerald-600 hover:bg-emerald-500 hover:scale-[1.02] text-white rounded-xl font-extrabold tracking-wider uppercase text-sm shadow-xl shadow-emerald-500/25 transition">
-                        Inicia tu proceso de admisión
-                    </a>
-                </div>
-
-                <div class="select-none">
-                    <span class="text-2xl md:text-3xl font-black font-heading tracking-widest text-emerald-600 italic uppercase">
-                        #ForjandoLíderes
-                    </span>
-                </div>
-            </div>
-
-            <!-- Right Side Bento/Collage Photo Grid exactly matching user's reference -->
-            <div class="lg:col-span-7 grid grid-cols-2 gap-4 h-full animate-fade-in">
-                <!-- Large top image spanning right -->
-                <div class="col-span-2 md:col-span-1 h-56 md:h-72 rounded-3xl overflow-hidden border border-slate-100 shadow-sm transition hover:scale-[1.02] duration-300">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600" alt="Students in team" class="w-full h-full object-cover">
-                </div>
-                <!-- Top right image -->
-                <div class="hidden md:block h-56 md:h-72 rounded-3xl overflow-hidden border border-slate-100 shadow-sm transition hover:scale-[1.02] duration-300">
-                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600" alt="Laughing and studying" class="w-full h-full object-cover">
-                </div>
-                <!-- Bottom left image -->
-                <div class="h-44 md:h-56 rounded-3xl overflow-hidden border border-slate-100 shadow-sm transition hover:scale-[1.02] duration-300">
-                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=600" alt="Work together in class" class="w-full h-full object-cover">
-                </div>
-                <!-- Bottom right image -->
-                <div class="h-44 md:h-56 rounded-3xl overflow-hidden border border-slate-100 shadow-sm transition hover:scale-[1.02] duration-300">
-                    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=600" alt="Computer laboratory" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-
-        <!-- Dynamic Animated Information Carousel Section (Emerald Theme) -->
-        <div id="experiencia" class="bg-slate-50/70 backdrop-blur-md p-8 md:p-14 rounded-3xl border border-slate-100 text-center space-y-6 select-none scroll-mt-24 shadow-sm animate-fade-in">
-            <h3 class="text-xs font-black text-emerald-600 uppercase tracking-widest font-heading">¿Por qué elegirnos?</h3>
-            
-            <div id="infoCarousel" class="relative max-w-3xl mx-auto h-44 flex items-center justify-center select-none">
-                <!-- Slide 1 -->
-                <div class="carousel-item active space-y-4">
-                    <div class="w-16 h-16 bg-emerald-100 rounded-3xl flex items-center justify-center text-emerald-600 text-3xl mx-auto mb-2">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Excelencia Académica</h4>
-                    <p class="text-slate-600 text-base max-w-xl mx-auto leading-relaxed">Formamos a los mejores perfiles del país, logrando resultados sobresalientes en competencias mundiales.</p>
-                </div>
-
-                <!-- Slide 2 -->
-                <div class="carousel-item space-y-4">
-                    <div class="w-16 h-16 bg-teal-100 rounded-3xl flex items-center justify-center text-teal-600 text-3xl mx-auto mb-2">
-                        <i class="fa-solid fa-microscope"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Tecnología de Vanguardia</h4>
-                    <p class="text-slate-600 text-base max-w-xl mx-auto leading-relaxed">Infraestructura tecnológica y laboratorios STEAM de última generación para innovar con fe.</p>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="carousel-item space-y-4">
-                    <div class="w-16 h-16 bg-amber-100 rounded-3xl flex items-center justify-center text-amber-600 text-3xl mx-auto mb-2">
-                        <i class="fa-solid fa-users-rays"></i>
-                    </div>
-                    <h4 class="text-2xl font-black text-slate-900 tracking-tight font-heading">Crecimiento Humano</h4>
-                    <p class="text-slate-600 text-base max-w-xl mx-auto leading-relaxed">Impulsamos la formación en valores, empatía y liderazgo ético para el futuro de la sociedad.</p>
-                </div>
-            </div>
-
-            <!-- Dots Control -->
-            <div class="flex items-center justify-center space-x-2.5 pt-4">
-                <button onclick="changeSlide(0)" class="dot-btn h-2 w-7 bg-emerald-600 rounded-full transition-all"></button>
-                <button onclick="changeSlide(1)" class="dot-btn h-2 w-3 bg-slate-300 rounded-full transition-all"></button>
-                <button onclick="changeSlide(2)" class="dot-btn h-2 w-3 bg-slate-300 rounded-full transition-all"></button>
-            </div>
-        </div>
-
-        <!-- Wordpress-styled News & Blog Section -->
-        <div id="noticias" class="space-y-8 scroll-mt-24 animate-fade-in">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h2 class="text-3xl font-black text-slate-900 tracking-tight font-heading">Blog y Comunicados</h2>
-                    <p class="text-slate-500 font-medium text-sm mt-1">Sigue el día a día de la vida en nuestro campus.</p>
-                </div>
-                <a href="/modules/news/index.php" class="text-xs font-black uppercase tracking-wider text-emerald-600 hover:text-emerald-500 flex items-center space-x-1.5 transition">
-                    <span>Ver Noticias</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <?php if (empty($newsList)): ?>
-                    <div class="md:col-span-2 bg-white p-12 text-center rounded-3xl shadow-sm border border-slate-100">
-                        <p class="text-slate-400 text-sm">No hay noticias publicadas en este momento.</p>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($newsList as $news): ?>
-                        <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-slate-100 transition flex flex-col h-full group">
-                            <?php if (!empty($news['photo_url'])): ?>
-                                <div class="h-60 w-full overflow-hidden relative">
-                                    <img src="<?= htmlspecialchars($news['photo_url']) ?>" alt="News Banner" class="w-full h-full object-cover transition-all group-hover:scale-105 duration-500">
-                                </div>
-                            <?php endif; ?>
-                            <div class="p-6 md:p-8 flex flex-col justify-between flex-1 space-y-4">
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
-                                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-lg">Comunicado</span>
-                                        <span><?= date('d M, Y', strtotime($news['created_at'])) ?></span>
-                                    </div>
-                                    <h3 class="text-xl font-extrabold font-heading text-slate-900 leading-snug tracking-tight group-hover:text-emerald-600 transition"><?= htmlspecialchars($news['title']) ?></h3>
-                                    <p class="text-slate-600 text-sm leading-relaxed whitespace-pre-line"><?= htmlspecialchars($news['content']) ?></p>
-                                </div>
-                            </div>
+                <!-- Right Column: 6 Premium Cards -->
+                <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-orange-50 group-hover:bg-enfantOrange flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-school text-2xl text-enfantOrange group-hover:text-white transition-colors duration-300"></i>
                         </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-enfantOrange transition-colors">Excelentes Instalaciones</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Espacios modernos y seguros diseñados para el desarrollo óptimo.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 group-hover:bg-enfantBlue flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-flask text-2xl text-enfantBlue group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-enfantBlue transition-colors">Juegos Divertidos</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Áreas recreativas donde los niños desarrollan habilidades motoras.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-emerald-50 group-hover:bg-emerald-500 flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-scroll text-2xl text-emerald-500 group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-emerald-500 transition-colors">Clases Variadas</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Plan de estudios que incluye arte, música, idiomas y tecnología.</p>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-purple-50 group-hover:bg-purple-500 flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-microscope text-2xl text-purple-500 group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-purple-500 transition-colors">Laboratorios</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Instalaciones científicas donde la curiosidad se hace práctica.</p>
+                    </div>
+                    <!-- Card 5 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-amber-50 group-hover:bg-amber-500 flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-ice-cream text-2xl text-amber-500 group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-amber-500 transition-colors">Comidas Sanas</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Menús balanceados preparados por nutricionistas expertos.</p>
+                    </div>
+                    <!-- Card 6 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_8px_30px_-4px_rgba(252,92,76,0.15)] hover:-translate-y-1 transition-all duration-300 group">
+                        <div class="w-14 h-14 rounded-full bg-rose-50 group-hover:bg-rose-500 flex items-center justify-center mb-5 transition-colors duration-300">
+                            <i class="fa-solid fa-bus text-2xl text-rose-500 group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h4 class="font-heading text-sm text-enfantBlue font-bold uppercase tracking-wider mb-3 group-hover:text-rose-500 transition-colors">Rutas Escolares</h4>
+                        <p class="text-gray-500 text-[13px] leading-relaxed">Flota segura con personal capacitado para traslados.</p>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Faculty Showcase Section -->
-        <div id="facultad" class="space-y-8 scroll-mt-24 animate-fade-in">
-            <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight font-heading">Nuestra Facultad</h2>
-                <p class="text-slate-500 font-medium text-sm mt-1">Conoce a nuestro destacado equipo de maestros y docentes.</p>
+    <!-- Enrollment Steps Section -->
+    <section id="enrollment" class="py-20 bg-hex-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-heading font-normal text-gray-500 uppercase tracking-widest mb-2">Inscripciones</h2>
+                <p class="text-gray-500 text-lg font-light">Pasos realizados con corazón, alma, mente y fuerza</p>
+                <div class="flex items-center justify-center mt-4">
+                    <div class="w-12 h-[1px] bg-gray-300"></div>
+                    <div class="w-3 h-3 rounded-full border-2 border-enfantOrange mx-2"></div>
+                    <div class="w-12 h-[1px] bg-gray-300"></div>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <?php if (empty($teachers)): ?>
-                    <div class="lg:col-span-4 bg-white p-12 text-center rounded-3xl shadow-sm border border-slate-100">
-                        <p class="text-slate-400 text-sm">Docentes aún no registrados.</p>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($teachers as $t): ?>
-                        <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center space-y-4 group">
-                            <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-extrabold text-xl shadow-sm flex-shrink-0 transition-transform group-hover:scale-105 duration-300">
-                                <?= strtoupper(substr($t['first_name'], 0, 1) . substr($t['last_name'], 0, 1)) ?>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center relative z-10">
+                <!-- Decorative Line -->
+                <div class="hidden lg:block absolute top-10 left-[12%] right-[12%] h-[1px] bg-gray-200 -z-10 border border-dashed border-gray-300"></div>
+                
+                <!-- Step 1 -->
+                <div class="bg-transparent">
+                    <div class="w-20 h-20 mx-auto bg-enfantBlue text-white rounded-full flex items-center justify-center text-2xl font-heading font-light mb-6 shadow-md">1</div>
+                    <h4 class="font-heading text-lg text-gray-600 font-normal mb-3">Contacto</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed px-4">Comunícate con nosotros para agendar una visita o resolver cualquier duda inicial sobre nuestro programa.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-transparent">
+                    <div class="w-20 h-20 mx-auto bg-enfantOrange text-white rounded-full flex items-center justify-center text-2xl font-heading font-light mb-6 shadow-md">2</div>
+                    <h4 class="font-heading text-lg text-gray-600 font-normal mb-3">Solicitud</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed px-4">Completa el formulario de admisión con todos los datos requeridos del estudiante y sus padres.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-transparent">
+                    <div class="w-20 h-20 mx-auto bg-enfantBlue text-white rounded-full flex items-center justify-center text-2xl font-heading font-light mb-6 shadow-md">3</div>
+                    <h4 class="font-heading text-lg text-gray-600 font-normal mb-3">Orientación</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed px-4">Asiste a una entrevista personalizada para alinear expectativas y conocer nuestra metodología educativa.</p>
+                </div>
+                <!-- Step 4 -->
+                <div class="bg-transparent">
+                    <div class="w-20 h-20 mx-auto bg-enfantOrange text-white rounded-full flex items-center justify-center text-2xl font-heading font-light mb-6 shadow-md">4</div>
+                    <h4 class="font-heading text-lg text-gray-600 font-normal mb-3">Admisión</h4>
+                    <p class="text-gray-500 text-sm leading-relaxed px-4">Recibe la carta de aceptación oficial y únete a nuestra gran familia educativa.</p>
+                </div>
+            </div>
+
+            <div class="mt-12 flex justify-center space-x-2">
+                <button type="button" onclick="alert('Ya estás en el primer paso del proceso de inscripción.')" class="border border-enfantOrange text-enfantOrange px-6 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-enfantOrange hover:text-white transition">Anterior</button>
+                <button type="button" onclick="alert('Sigue los 4 pasos mostrados arriba para completar tu inscripción.')" class="border border-enfantOrange text-enfantOrange px-6 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest hover:bg-enfantOrange hover:text-white transition">Siguiente</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- First Step CTA Section -->
+    <section class="py-16 bg-gray-100 border-t border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-6 mb-6 md:mb-0">
+                <div class="w-20 h-20 rounded-full bg-white shadow-sm flex items-center justify-center text-enfantOrange text-3xl">
+                    <i class="fa-regular fa-paper-plane"></i>
+                </div>
+                <div>
+                    <h3 class="font-heading text-2xl text-gray-600 uppercase tracking-widest mb-1">Da El Primer Paso</h3>
+                    <p class="text-enfantBlue font-medium">Un mundo de aprendices donde los niños ganan un pasaporte al mundo</p>
+                </div>
+            </div>
+            <a href="/auth/login.php" class="border border-enfantOrange text-enfantOrange px-8 py-3 rounded-full text-[13px] font-bold uppercase tracking-widest hover:bg-enfantOrange hover:text-white transition">Contáctanos</a>
+        </div>
+    </section>
+
+    <!-- Newsletter Footer Top -->
+    <div id="contact" class="bg-white py-16 text-center border-b border-gray-100">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="w-24 h-24 mx-auto rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-enfantOrange text-4xl mb-6 shadow-sm">
+                <i class="fa-regular fa-envelope-open"></i>
+            </div>
+            <h2 class="text-3xl font-heading font-normal text-gray-600 mb-8">¿Quieres saber de nosotros?</h2>
+            <form onsubmit="event.preventDefault(); alert('¡Gracias por suscribirte! Te hemos enviado un correo de confirmación.');" class="flex justify-center max-w-lg mx-auto relative">
+                <input type="email" required placeholder="Tu dirección de correo" class="w-full bg-gray-50 border border-gray-200 rounded-full px-6 py-4 focus:outline-none focus:border-enfantOrange">
+                <button type="submit" class="absolute right-1 top-1 bottom-1 bg-enfantOrange text-white px-8 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-opacity-90 transition">Suscribirse</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Footer -->
+    <footer class="bg-enfantBlue text-gray-300 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-700 pb-16 mb-10">
+            <!-- About Us Column -->
+            <div>
+                <h4 class="font-heading text-[13px] text-white uppercase tracking-widest mb-6 pb-2 border-b-2 border-enfantOrange inline-block">Sobre Nosotros</h4>
+                <p class="text-sm leading-relaxed mb-8">
+                    Somos una institución educativa comprometida con la excelencia académica y el desarrollo integral. Nuestro enfoque humano garantiza que cada estudiante alcance su máximo potencial en un ambiente seguro y estimulante.
+                </p>
+                <div class="text-white text-3xl font-bold tracking-tighter">
+                    enfant<span class="text-enfantOrange">.</span>
+                    <p class="text-[10px] font-normal tracking-widest uppercase mt-1 text-gray-400">Escuela Primaria</p>
+                </div>
+            </div>
+
+            <!-- Recent Posts Column -->
+            <div>
+                <h4 class="font-heading text-[13px] text-white uppercase tracking-widest mb-6 pb-2 border-b-2 border-enfantOrange inline-block">Publicaciones Recientes</h4>
+                <ul class="space-y-6">
+                    <?php if (empty($newsList)): ?>
+                        <li class="text-sm">No hay publicaciones recientes.</li>
+                    <?php else: ?>
+                        <?php foreach($newsList as $news): ?>
+                        <li class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gray-800 rounded-md overflow-hidden shrink-0">
+                                <?php if (!empty($news['photo_url'])): ?>
+                                    <img src="<?= htmlspecialchars($news['photo_url']) ?>" alt="Post" class="w-full h-full object-cover">
+                                <?php else: ?>
+                                    <div class="w-full h-full bg-gray-700"></div>
+                                <?php endif; ?>
                             </div>
                             <div>
-                                <h4 class="font-extrabold text-slate-900 font-heading text-base leading-tight"><?= htmlspecialchars($t['first_name'] . ' ' . $t['last_name']) ?></h4>
-                                <span class="inline-block px-2.5 py-1 mt-1.5 text-xs font-black rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-700">
-                                    <?= htmlspecialchars($t['specialty']) ?>
-                                </span>
+                                <a href="#" class="text-white text-sm font-medium hover:text-enfantOrange transition leading-tight block mb-1"><?= htmlspecialchars($news['title']) ?></a>
+                                <p class="text-enfantOrange text-sm font-bold"><?= date('d', strtotime($news['created_at'])) ?> <span class="text-[10px] text-gray-400 font-normal uppercase tracking-widest">/ <?= date('F', strtotime($news['created_at'])) ?></span></p>
                             </div>
-                            <p class="text-slate-400 font-medium text-xs truncate max-w-[200px]"><?= htmlspecialchars($t['email']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                        </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
+            </div>
+
+            <!-- Features Column -->
+            <div>
+                <h4 class="font-heading text-[13px] text-white uppercase tracking-widest mb-6 pb-2 border-b-2 border-enfantOrange inline-block">Nuestras Características</h4>
+                <p class="text-sm leading-relaxed mb-6">Ofrecemos soluciones integrales para la educación moderna. Cada detalle de nuestras instalaciones y metodología ha sido cuidadosamente planificado.</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Diseño limpio y amigable</li>
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Entorno ultra responsivo</li>
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Colores agradables</li>
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Iconos y material infantil</li>
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Plugins y herramientas premium</li>
+                    <li class="flex items-center"><i class="fa-regular fa-circle-check text-enfantOrange mr-3"></i> Soporte dedicado 24/7</li>
+                </ul>
             </div>
         </div>
-    </main>
 
-    <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-item');
-    const dots = document.querySelectorAll('.dot-btn');
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-enfantOrange hover:text-white hover:bg-enfantOrange transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-enfantOrange hover:text-white hover:bg-enfantOrange transition"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-enfantOrange hover:text-white hover:bg-enfantOrange transition"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:border-enfantOrange hover:text-white hover:bg-enfantOrange transition"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <p class="text-xs text-gray-500">© <?= date('Y') ?> Escuela Primaria Enfant creada con <i class="fa-regular fa-heart text-enfantOrange"></i> en Bucharest</p>
+        </div>
+    </footer>
 
-    function changeSlide(index) {
-        slides[currentSlide].classList.remove('active');
-        dots[currentSlide].classList.remove('w-7', 'bg-emerald-600');
-        dots[currentSlide].classList.add('w-3', 'bg-slate-300');
-
-        currentSlide = index;
-
-        slides[currentSlide].classList.add('active');
-        dots[currentSlide].classList.remove('w-3', 'bg-slate-300');
-        dots[currentSlide].classList.add('w-7', 'bg-emerald-600');
-    }
-
-    // Auto-rotate every 5 seconds
-    setInterval(() => {
-        let next = (currentSlide + 1) % slides.length;
-        changeSlide(next);
-    }, 5000);
-    </script>
 </body>
 </html>
 <?php
@@ -298,11 +462,23 @@ if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR'])) {
     $debt = $db->query("SELECT SUM(amount) FROM payments WHERE status = 'Pendiente'")->fetchColumn();
     $totalDebts = $debt ? round($debt, 2) : 0.0;
 
+    $pendingAdmissions = $db->query("SELECT COUNT(*) FROM admission_applications WHERE status = 'Pendiente'")->fetchColumn();
+
     $attCount = $db->query("SELECT COUNT(*) FROM attendance")->fetchColumn();
     if ($attCount > 0) {
         $present = $db->query("SELECT COUNT(*) FROM attendance WHERE status = 'Presente'")->fetchColumn();
         $attendancePercentage = round(($present / $attCount) * 100, 1);
     }
+    
+    // Gráfico: Estudiantes por Curso
+    $courseData = $db->query("
+        SELECT c.name, COUNT(s.id) as count 
+        FROM courses c 
+        LEFT JOIN students s ON c.id = s.course_id 
+        GROUP BY c.id
+    ")->fetchAll();
+    $chartLabels = json_encode(array_column($courseData, 'name'));
+    $chartData = json_encode(array_column($courseData, 'count'));
 }
 
 $recentNotifications = $db->prepare("
@@ -362,7 +538,7 @@ include __DIR__ . '/views/layout/sidebar.php';
     </div>
 
     <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR'])): ?>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between hover:shadow-md transition cursor-pointer">
             <div class="space-y-2">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Estudiantes</span>
@@ -418,6 +594,20 @@ include __DIR__ . '/views/layout/sidebar.php';
                 <i class="fa-solid fa-wallet"></i>
             </div>
         </div>
+
+        <a href="/modules/admissions/index.php" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between hover:shadow-md transition cursor-pointer">
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Admisiones</span>
+                <p class="text-4xl font-extrabold text-slate-900 tracking-tight"><?= $pendingAdmissions ?></p>
+                <div class="flex items-center text-xs text-orange-600 font-semibold space-x-1">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Pendientes</span>
+                </div>
+            </div>
+            <div class="w-14 h-14 bg-orange-50 rounded-2xl flex items-center justify-center text-enfantOrange text-xl font-bold">
+                <i class="fa-solid fa-file-signature"></i>
+            </div>
+        </a>
     </div>
     <?php endif; ?>
 
@@ -458,6 +648,76 @@ include __DIR__ . '/views/layout/sidebar.php';
             </a>
         </div>
     </div>
+
+    <!-- Panel Inferior: Notificaciones Recientes -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 h-full">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-bold text-slate-800 text-lg">Últimas Comunicaciones</h3>
+                <a href="/modules/notifications/index.php" class="text-xs font-bold text-emerald-600 hover:text-emerald-500 uppercase tracking-wider">Ver Todas</a>
+            </div>
+            
+            <div class="space-y-4">
+                <?php if (empty($notifications)): ?>
+                    <div class="text-center py-6 text-slate-400">
+                        <p class="text-sm">No hay notificaciones recientes.</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($notifications as $notif): ?>
+                        <div class="flex space-x-4 p-4 rounded-2xl hover:bg-slate-50 transition border border-transparent hover:border-slate-100">
+                            <div class="w-10 h-10 rounded-full flex-shrink-0 bg-slate-100 text-slate-500 flex items-center justify-center font-bold">
+                                <?= strtoupper(substr($notif['first_name'], 0, 1) . substr($notif['last_name'], 0, 1)) ?>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800"><?= htmlspecialchars($notif['title']) ?></h4>
+                                <p class="text-xs text-slate-500 mt-1 line-clamp-2"><?= htmlspecialchars($notif['message']) ?></p>
+                                <span class="text-[10px] font-bold text-emerald-600 uppercase mt-2 block"><?= date('d M, h:i A', strtotime($notif['created_at'])) ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 h-full flex flex-col">
+            <h3 class="font-bold text-slate-800 text-lg mb-4 flex items-center">
+                <i class="fa-solid fa-chart-column text-indigo-500 mr-2"></i> Distribución de Estudiantes por Curso
+            </h3>
+            <div class="flex-1 w-full relative" style="min-height: 250px;">
+                <canvas id="studentsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('studentsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?= $chartLabels ?? '[]' ?>,
+                datasets: [{
+                    label: 'Estudiantes',
+                    data: <?= $chartData ?? '[]' ?>,
+                    backgroundColor: '#10b981',
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+    });
+</script>
 </div>
 
 <?php

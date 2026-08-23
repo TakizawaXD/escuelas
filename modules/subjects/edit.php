@@ -65,7 +65,7 @@ include __DIR__ . '/../../views/layout/sidebar.php';
 <div class="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-100 p-8 animate-fade-in">
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Editar Materia</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">Editar Materia</h2>
             <p class="text-slate-500 font-medium text-sm mt-1">Modifique los datos de la materia académica y materiales.</p>
         </div>
         <a href="/modules/subjects/index.php" class="text-sm font-semibold text-slate-500 hover:text-slate-800 flex items-center space-x-1">
@@ -84,19 +84,19 @@ include __DIR__ . '/../../views/layout/sidebar.php';
     <form method="POST" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div class="md:col-span-2">
-                <label for="name" class="block text-sm font-semibold text-slate-700 mb-1.5">Nombre de Materia *</label>
+                <label for="name" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Nombre de Materia *</label>
                 <input type="text" name="name" id="name" required value="<?= htmlspecialchars($subject['name']) ?>"
                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 outline-none text-sm font-medium transition">
             </div>
 
             <div class="md:col-span-2">
-                <label for="description" class="block text-sm font-semibold text-slate-700 mb-1.5">Descripción</label>
+                <label for="description" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Descripción</label>
                 <input type="text" name="description" id="description" value="<?= htmlspecialchars($subject['description']) ?>"
                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 outline-none text-sm font-medium transition">
             </div>
 
             <div>
-                <label for="course_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Grado / Curso *</label>
+                <label for="course_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Grado / Curso *</label>
                 <select name="course_id" id="course_id" required
                         class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
                     <option value="">Seleccione un grado...</option>
@@ -107,7 +107,7 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="teacher_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Docente Asignado</label>
+                <label for="teacher_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Docente Asignado</label>
                 <select name="teacher_id" id="teacher_id"
                         class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
                     <option value="">Sin asignar...</option>
@@ -118,21 +118,21 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="weekly_hours" class="block text-sm font-semibold text-slate-700 mb-1.5">Intensidad Horaria (Horas/Semana) *</label>
+                <label for="weekly_hours" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Intensidad Horaria (Horas/Semana) *</label>
                 <input type="number" name="weekly_hours" id="weekly_hours" required min="1" max="40" value="<?= intval($subject['weekly_hours']) ?>"
                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
 
             <div>
-                <label for="study_material" class="block text-sm font-semibold text-slate-700 mb-1.5">URL de Material de Estudio</label>
+                <label for="study_material" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">URL de Material de Estudio</label>
                 <input type="url" name="study_material" id="study_material" placeholder="Ej. https://enlace-a-material.com/pdf" value="<?= htmlspecialchars($subject['study_material'] ?? '') ?>"
                        class="block w-full px-4 py-3 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
         </div>
 
         <div class="pt-4 flex items-center justify-end space-x-2 border-t border-slate-100">
-            <a href="/modules/subjects/index.php" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm">Cancelar</a>
-            <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition text-sm shadow-md">Actualizar Materia</button>
+            <a href="/modules/subjects/index.php" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all text-sm">Cancelar</a>
+            <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">Actualizar Materia</button>
         </div>
     </form>
 </div>

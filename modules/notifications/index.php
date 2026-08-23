@@ -86,10 +86,29 @@ include __DIR__ . '/../../views/layout/sidebar.php';
                 <div class="text-sm text-slate-600 leading-relaxed pt-1">
                     <?= nl2br(htmlspecialchars($notif['message'])) ?>
                 </div>
+                
+                <div class="pt-3 flex justify-end border-t border-slate-100 mt-3">
+                    <button onclick="marcarLeido(this, <?= $notif['id'] ?>)" class="text-xs font-bold text-slate-400 hover:text-indigo-600 transition flex items-center space-x-1">
+                        <i class="fa-solid fa-check-double"></i>
+                        <span>Marcar como leído</span>
+                    </button>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
+
+<script>
+function marcarLeido(btn, id) {
+    const card = btn.closest('.bg-white');
+    card.style.opacity = '0.5';
+    btn.innerHTML = '<i class="fa-solid fa-check text-emerald-500"></i> <span class="text-emerald-500">Leído</span>';
+    btn.disabled = true;
+    
+    // Aquí iría la llamada fetch() real al backend
+    // fetch('/api/notifications/read.php?id=' + id);
+}
+</script>
 
 <?php
 include __DIR__ . '/../../views/layout/footer.php';

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `login_attempts` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `ip_address` TEXT NOT NULL,
+  `attempts` INTEGER DEFAULT 1,
+  `last_attempt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

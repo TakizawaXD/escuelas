@@ -55,10 +55,13 @@ include __DIR__ . '/../../views/layout/sidebar.php';
 ?>
 
 <!-- Form -->
-<div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
+<div class="max-w-3xl mx-auto bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/60 p-8 md:p-12 relative overflow-hidden group">
+    <!-- Premium ambient background -->
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-50 pointer-events-none transition-opacity group-hover:opacity-100"></div>
+    <div class="relative z-10">
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Agregar Usuario</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">Agregar Usuario</h2>
             <p class="text-slate-500 font-medium text-sm mt-1">Llene los datos requeridos del nuevo usuario.</p>
         </div>
         <a href="/modules/users/index.php" class="text-sm font-semibold text-slate-500 hover:text-slate-800 flex items-center space-x-1">
@@ -77,16 +80,16 @@ include __DIR__ . '/../../views/layout/sidebar.php';
     <form method="POST" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-                <label for="document" class="block text-sm font-semibold text-slate-700 mb-1.5">N° de Cédula / Documento *</label>
+                <label for="document" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">N° de Cédula / Documento *</label>
                 <input type="text" name="document" id="document" required
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Ej. 12345678">
             </div>
 
             <div>
-                <label for="role_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Rol *</label>
+                <label for="role_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Rol *</label>
                 <select name="role_id" id="role_id" required
-                        class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                        class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
                     <option value="">Seleccione un rol...</option>
                     <?php foreach ($roles as $r): ?>
                         <option value="<?= $r['id'] ?>"><?= htmlspecialchars($r['name']) ?></option>
@@ -95,46 +98,48 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="first_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Nombres *</label>
+                <label for="first_name" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Nombres *</label>
                 <input type="text" name="first_name" id="first_name" required
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Ej. Andrés">
             </div>
 
             <div>
-                <label for="last_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Apellidos *</label>
+                <label for="last_name" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Apellidos *</label>
                 <input type="text" name="last_name" id="last_name" required
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Ej. Mendoza">
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Correo Electrónico *</label>
+                <label for="email" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Correo Electrónico *</label>
                 <input type="email" name="email" id="email" required
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Ej. correo@dominio.com">
             </div>
 
             <div>
-                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-1.5">Teléfono</label>
+                <label for="phone" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Teléfono</label>
                 <input type="text" name="phone" id="phone"
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Ej. 1234567890">
             </div>
 
             <div class="md:col-span-2">
-                <label for="password" class="block text-sm font-semibold text-slate-700 mb-1.5">Contraseña Inicial *</label>
+                <label for="password" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Contraseña Inicial *</label>
                 <input type="password" name="password" id="password" required minlength="4"
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition"
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
                        placeholder="Mínimo 4 caracteres">
             </div>
         </div>
 
         <div class="pt-4 flex items-center justify-end space-x-2 border-t border-slate-100">
-            <a href="/modules/users/index.php" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm">Cancelar</a>
-            <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition text-sm shadow-md">Guardar Usuario</button>
+            <a href="/modules/users/index.php" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all text-sm">Cancelar</a>
+            <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">Guardar Usuario</button>
         </div>
     </form>
+</div>
+</div>
 </div>
 
 <?php

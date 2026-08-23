@@ -14,142 +14,216 @@ if (!$dbSettings) {
     ];
 }
 ?>
-<!-- Sidebar Container -->
-<aside id="sidebar-menu" class="hidden md:flex w-full md:w-64 bg-slate-900 text-slate-400 flex-col justify-between border-r border-slate-800 shrink-0 select-none">
-    <div class="p-5">
-        <!-- Logo / Branding with Dynamic System Colors and Custom Logo URL Support -->
-        <div class="flex items-center space-x-3 mb-8">
-            <?php if (!empty($dbSettings['logo_url'])): ?>
-                <div class="w-10 h-10 overflow-hidden rounded-xl bg-white border border-slate-700/50 flex items-center justify-center">
-                    <img src="<?= htmlspecialchars($dbSettings['logo_url']) ?>" alt="Logo" class="w-full h-full object-cover">
-                </div>
-            <?php else: ?>
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg" style="background-color: <?= $dbSettings['color_primary'] ?>;">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-            <?php endif; ?>
-            <div>
-                <h1 class="text-white font-bold tracking-wider leading-tight text-base uppercase"><?= htmlspecialchars($dbSettings['app_name']) ?></h1>
-                <span class="text-[10px] font-semibold tracking-widest uppercase" style="color: <?= $dbSettings['color_secondary'] ?>;">ERP EDUCATIVO</span>
-            </div>
-        </div>
+<!-- Top Navbar Container -->
+<nav id="sidebar-menu" class="hidden md:flex w-full bg-[#1d2327] text-[#f0f0f1] shrink-0 select-none z-30 border-b border-[#2c3338] sticky top-8">
+    <div class="max-w-7xl mx-auto w-full px-2 flex flex-col md:flex-row">
+        <!-- Main Navbar List -->
+        <ul class="flex flex-col md:flex-row text-[13px] font-medium w-full" id="adminmenu">
+            
+            <li>
+                <a href="/index.php" class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition <?= ($_SERVER['PHP_SELF'] == '/index.php') ? 'bg-[#2271b1] text-white hover:bg-[#2271b1] hover:text-white' : '' ?>">
+                    <i class="fa-solid fa-gauge text-lg <?= ($_SERVER['PHP_SELF'] == '/index.php') ? 'text-white' : 'text-[#a7aaad]' ?>"></i>
+                    <span>Panel Principal</span>
+                </a>
+            </li>
 
-        <!-- Current User Profile Info -->
-        <div class="bg-slate-800/50 rounded-2xl p-4 mb-6 border border-slate-800">
-            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Bienvenido</p>
-            <p class="text-white font-medium text-base truncate"><?= htmlspecialchars($u['first_name'] . ' ' . $u['last_name']) ?></p>
-            <span class="inline-block px-2 py-0.5 mt-1.5 text-xs font-semibold rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                <?= htmlspecialchars($role) ?>
-            </span>
-        </div>
-
-        <!-- Navigation Links -->
-        <nav class="space-y-1.5">
-            <!-- Universal Dashboard -->
-            <a href="/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                <i class="fa-solid fa-chart-pie w-5"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <!-- Módulos - ADMIN, DIRECTOR, COORDINADOR -->
-            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR'])): ?>
-                <div class="pt-4 pb-2">
-                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold px-4">Administración</p>
-                </div>
-                
-                <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
-                <a href="/modules/users/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-users w-5"></i>
+            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
+            <li>
+                <a href="/modules/users/index.php" class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                    <i class="fa-solid fa-users text-[#a7aaad] text-lg"></i>
                     <span>Usuarios</span>
                 </a>
-                <?php endif; ?>
-
-                <a href="/modules/students/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-user-graduate w-5"></i>
-                    <span>Estudiantes</span>
-                </a>
-
-                <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
-                <a href="/modules/teachers/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-chalkboard-user w-5"></i>
-                    <span>Docentes</span>
-                </a>
-                <?php endif; ?>
-
-                <a href="/modules/subjects/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-book w-5"></i>
-                    <span>Materias</span>
-                </a>
-
-                <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
-                <a href="/modules/settings/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-sliders w-5"></i>
-                    <span>Ajustes / Personalizar</span>
-                </a>
-                <?php endif; ?>
+            </li>
             <?php endif; ?>
 
-            <!-- Académico & Operaciones - DOCENTE -->
+            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR'])): ?>
+                <!-- DROPDOWN: ACADÉMICO -->
+                <li class="relative group">
+                    <button class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition w-full md:w-auto text-left">
+                        <i class="fa-solid fa-graduation-cap text-[#a7aaad] text-lg"></i>
+                        <span>Académico</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-[#a7aaad]"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <ul class="md:absolute left-0 top-full hidden group-hover:block bg-[#1d2327] border border-[#2c3338] shadow-lg min-w-[220px] z-50">
+                        <li>
+                            <a href="/modules/academic_years/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-calendar-star w-4 text-center"></i> <span>Años Lectivos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/admissions/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-enfantOrange transition">
+                                <i class="fa-solid fa-file-signature w-4 text-center"></i> <span>Admisiones</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/students/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-user-graduate w-4 text-center"></i> <span>Estudiantes</span>
+                            </a>
+                        </li>
+                        <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
+                        <li>
+                            <a href="/modules/teachers/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-chalkboard-user w-4 text-center"></i> <span>Docentes</span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+                        <li>
+                            <a href="/modules/subjects/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-book w-4 text-center"></i> <span>Asignaturas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/classrooms/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-school w-4 text-center"></i> <span>Aulas</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
             <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR', 'DOCENTE'])): ?>
-                <div class="pt-4 pb-2">
-                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold px-4">Académico</p>
-                </div>
-                <a href="/modules/grades/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-file-pen w-5"></i>
-                    <span>Notas</span>
-                </a>
-                <a href="/modules/attendance/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-calendar-check w-5"></i>
-                    <span>Asistencia</span>
-                </a>
+                <!-- DROPDOWN: GESTIÓN DE CLASE -->
+                <li class="relative group">
+                    <button class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition w-full md:w-auto text-left">
+                        <i class="fa-solid fa-chalkboard text-[#a7aaad] text-lg"></i>
+                        <span>Gestión de Clase</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-[#a7aaad]"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <ul class="md:absolute left-0 top-full hidden group-hover:block bg-[#1d2327] border border-[#2c3338] shadow-lg min-w-[200px] z-50">
+                        <li>
+                            <a href="/modules/grades/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-file-pen w-4 text-center"></i> <span>Calificaciones</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/attendance/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-calendar-check w-4 text-center"></i> <span>Asistencia</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/exams/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-file-signature w-4 text-center"></i> <span>Exámenes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/certificates/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-award w-4 text-center"></i> <span>Certificados</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/library/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-book-open-reader w-4 text-center"></i> <span>Biblioteca</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             <?php endif; ?>
 
-            <!-- Finanzas & Padres / Estudiantes -->
-            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'ESTUDIANTE', 'PADRE'])): ?>
-                <div class="pt-4 pb-2">
-                    <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold px-4">Institucional</p>
-                </div>
-                <a href="/modules/payments/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-wallet w-5"></i>
-                    <span>Finanzas / Pagos</span>
-                </a>
+            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR', 'COORDINADOR', 'DOCENTE'])): ?>
+                <!-- DROPDOWN: BIENESTAR -->
+                <li class="relative group">
+                    <button class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition w-full md:w-auto text-left">
+                        <i class="fa-solid fa-heart-pulse text-[#a7aaad] text-lg"></i>
+                        <span>Bienestar</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-[#a7aaad]"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <ul class="md:absolute left-0 top-full hidden group-hover:block bg-[#1d2327] border border-[#2c3338] shadow-lg min-w-[200px] z-50">
+                        <li>
+                            <a href="/modules/medical_records/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-notes-medical w-4 text-center"></i> <span>Fichas Médicas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/discipline/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-clipboard-user w-4 text-center"></i> <span>Disciplina</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             <?php endif; ?>
 
-            <!-- Panel Padres / Estudiantes específico -->
-            <?php if (Auth::hasRole(['ESTUDIANTE', 'PADRE'])): ?>
-                <a href="/modules/parent_portal/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                    <i class="fa-solid fa-heart w-5"></i>
-                    <span>Portal Padres/Alumnos</span>
-                </a>
+            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
+                <!-- DROPDOWN: ADMINISTRATIVO -->
+                <li class="relative group">
+                    <button class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition w-full md:w-auto text-left">
+                        <i class="fa-solid fa-building-columns text-[#a7aaad] text-lg"></i>
+                        <span>Administrativo</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-[#a7aaad]"></i>
+                    </button>
+                    <!-- Dropdown Content -->
+                    <ul class="md:absolute left-0 top-full hidden group-hover:block bg-[#1d2327] border border-[#2c3338] shadow-lg min-w-[200px] z-50">
+                        <li>
+                            <a href="/modules/payments/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-wallet w-4 text-center"></i> <span>Finanzas</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/inventory/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-boxes-stacked w-4 text-center"></i> <span>Inventario</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/transport/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-bus w-4 text-center"></i> <span>Transporte</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/modules/cafeteria/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                                <i class="fa-solid fa-utensils w-4 text-center"></i> <span>Comedor Escolar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             <?php endif; ?>
 
-            <!-- Comunicados -->
-            <div class="pt-4 pb-2">
-                <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold px-4">Comunicados</p>
-            </div>
-            <a href="/modules/notifications/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                <i class="fa-solid fa-bell w-5"></i>
-                <span>Comunicaciones</span>
-            </a>
-            <a href="/modules/news/index.php" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all text-slate-300 font-medium">
-                <i class="fa-solid fa-newspaper w-5"></i>
-                <span>Noticias / Blog</span>
-            </a>
-        </nav>
+            <!-- DROPDOWN: COMUNICACIÓN -->
+            <li class="relative group">
+                <button class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition w-full md:w-auto text-left">
+                    <i class="fa-solid fa-comments text-[#a7aaad] text-lg"></i>
+                    <span>Comunicación</span>
+                    <i class="fa-solid fa-chevron-down text-[10px] ml-1 text-[#a7aaad]"></i>
+                </button>
+                <!-- Dropdown Content -->
+                <ul class="md:absolute left-0 top-full hidden group-hover:block bg-[#1d2327] border border-[#2c3338] shadow-lg min-w-[200px] z-50">
+                    <li>
+                        <a href="/modules/notifications/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                            <i class="fa-solid fa-bell w-4 text-center"></i> <span>Notificaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/modules/news/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                            <i class="fa-solid fa-thumbtack w-4 text-center"></i> <span>Publicaciones</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/modules/messages/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                            <i class="fa-regular fa-comments w-4 text-center"></i> <span>Mensajes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/modules/calendar/index.php" class="flex items-center space-x-3 px-4 py-2 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                            <i class="fa-solid fa-calendar-days w-4 text-center"></i> <span>Eventos</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <?php if (Auth::hasRole(['ADMIN', 'DIRECTOR'])): ?>
+            <li class="md:ml-auto">
+                <a href="/modules/settings/index.php" class="flex items-center space-x-2 px-4 py-3 hover:bg-[#2c3338] hover:text-[#72aee6] transition">
+                    <i class="fa-solid fa-sliders text-[#a7aaad] text-lg"></i>
+                    <span class="md:hidden lg:inline">Configuración</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+        </ul>
     </div>
-
-    <!-- Sidebar Footer -->
-    <div class="p-5 border-t border-slate-800/80">
-        <a href="/auth/logout.php" class="flex items-center justify-between px-4 py-3 text-red-400 font-medium bg-red-500/5 hover:bg-red-500/10 hover:text-red-300 rounded-xl transition">
-            <span class="flex items-center space-x-3">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Cerrar Sesión</span>
-            </span>
-            <i class="fa-solid fa-chevron-right text-xs"></i>
-        </a>
-    </div>
-</aside>
+</nav>
 
 <!-- Content Area -->
-<main class="flex-1 overflow-y-auto bg-slate-50 min-h-screen p-6 md:p-10">
+<main class="flex-1 overflow-y-auto bg-[#f0f0f1] w-full p-4 md:p-6 text-[#3c434a] min-h-[calc(100vh-65px)]">
     <div class="max-w-7xl mx-auto space-y-6">

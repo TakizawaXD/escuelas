@@ -1,45 +1,42 @@
 package com.escuela.erp.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "students")
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_user_id")
     private User parentUser;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 200)
     private String address;
 
-    public Student() {}
+    @Column(name = "photo_url", length = 255)
+    private String photoUrl;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-    public Course getCourse() { return course; }
-    public void setCourse(Course course) { this.course = course; }
-    public User getParentUser() { return parentUser; }
-    public void setParentUser(User parentUser) { this.parentUser = parentUser; }
-    public LocalDate getBirthDate() { return birthDate; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    @Builder.Default
+    @Column(precision = 4, scale = 2)
+    private Double gpa = 0.0;
+
+    @Column(name = "academic_status", length = 30)
+    @Builder.Default
+    private String academicStatus = "ACTIVO";
 }

@@ -80,27 +80,46 @@ if (!$dbSettings) {
         });
     </script>
 </head>
-<body class="h-full text-slate-800">
-    <!-- Top Header for Mobile only -->
-    <div class="md:hidden bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between sticky top-0 z-50">
-        <div class="flex items-center space-x-3">
-            <?php if (!empty($dbSettings['logo_url'])): ?>
-                <div class="w-9 h-9 overflow-hidden rounded-xl flex items-center justify-center bg-white border border-slate-700/50">
-                    <img src="<?= htmlspecialchars($dbSettings['logo_url']) ?>" alt="Logo" class="w-full h-full object-cover">
+<body class="h-full text-[#3c434a] bg-[#f0f0f1]">
+    <!-- WP Admin Bar -->
+    <div id="wpadminbar" class="w-full h-8 bg-[#1d2327] flex items-center justify-between px-3 text-[#f0f0f1] text-[13px] sticky top-0 z-50">
+        <div class="flex items-center space-x-4">
+            <a href="/" class="hover:text-[#72aee6] transition flex items-center space-x-1">
+                <i class="fa-brands fa-wordpress"></i>
+            </a>
+            <a href="/" class="hover:text-[#72aee6] transition flex items-center space-x-1">
+                <i class="fa-solid fa-house text-[10px]"></i>
+                <span class="font-medium"><?= htmlspecialchars($dbSettings['app_name']) ?></span>
+            </a>
+            <a href="/modules/news/index.php" class="hover:text-[#72aee6] transition flex items-center space-x-1">
+                <i class="fa-solid fa-plus text-[10px]"></i>
+                <span class="font-medium">New</span>
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="group relative flex items-center h-8 cursor-pointer">
+                <span class="hover:text-[#72aee6] transition flex items-center space-x-2">
+                    <span>Howdy, <?= htmlspecialchars($currentUser['first_name']) ?></span>
+                    <div class="w-5 h-5 bg-[#646970] rounded-sm flex items-center justify-center text-[10px]">
+                        <?= strtoupper(substr($currentUser['first_name'], 0, 1)) ?>
+                    </div>
+                </span>
+                <!-- Dropdown -->
+                <div class="absolute right-0 top-8 bg-[#1d2327] border border-[#2c3338] shadow-lg hidden group-hover:block min-w-[200px]">
+                    <a href="/auth/logout.php" class="block px-4 py-2 text-[#a7aaad] hover:text-[#72aee6] hover:bg-[#2c3338] transition">Log Out</a>
                 </div>
-            <?php else: ?>
-                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg" style="background-color: <?= $dbSettings['color_primary'] ?>;">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-            <?php endif; ?>
-            <div>
-                <h1 class="text-white font-bold tracking-wider leading-tight text-sm"><?= htmlspecialchars($dbSettings['app_name']) ?></h1>
-                <span class="text-[10px] font-semibold tracking-widest uppercase" style="color: <?= $dbSettings['color_secondary'] ?>;">ERP EDUCATIVO</span>
             </div>
         </div>
-        <button id="mobile-menu-toggle" class="text-slate-300 hover:text-white focus:outline-none p-2 rounded-xl bg-slate-800 border border-slate-700/50 transition">
+    </div>
+    <!-- Top Header for Mobile only -->
+    <!-- Mobile Header (Hidden in WP desktop) -->
+    <div class="md:hidden bg-[#1d2327] p-3 flex items-center justify-between sticky top-8 z-40 border-b border-[#2c3338]">
+        <div class="flex items-center space-x-3 text-white">
+            <h1 class="font-medium text-sm"><?= htmlspecialchars($dbSettings['app_name']) ?></h1>
+        </div>
+        <button id="mobile-menu-toggle" class="text-[#a7aaad] hover:text-white focus:outline-none p-1 transition">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </div>
 
-    <div class="min-h-full flex flex-col md:flex-row">
+    <div class="min-h-full flex flex-col">

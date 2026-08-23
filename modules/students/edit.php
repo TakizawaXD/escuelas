@@ -67,7 +67,7 @@ include __DIR__ . '/../../views/layout/sidebar.php';
 <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-100 p-8 animate-fade-in">
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Editar Estudiante</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">Editar Estudiante</h2>
             <p class="text-slate-500 font-medium text-sm mt-1">Actualiza la información académica y los reportes de <?= htmlspecialchars($student['first_name'] . ' ' . $student['last_name']) ?></p>
         </div>
         <a href="/modules/students/index.php" class="text-sm font-semibold text-slate-500 hover:text-slate-800 flex items-center space-x-1">
@@ -96,7 +96,7 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="course_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Curso / Grado *</label>
+                <label for="course_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Curso / Grado *</label>
                 <select name="course_id" id="course_id" required
                         class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
                     <option value="">Seleccione un curso...</option>
@@ -107,7 +107,7 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="parent_user_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Acudiente / Padre</label>
+                <label for="parent_user_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Acudiente / Padre</label>
                 <select name="parent_user_id" id="parent_user_id"
                         class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
                     <option value="">No asignar...</option>
@@ -118,39 +118,39 @@ include __DIR__ . '/../../views/layout/sidebar.php';
             </div>
 
             <div>
-                <label for="birth_date" class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Nacimiento *</label>
+                <label for="birth_date" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Fecha de Nacimiento *</label>
                 <input type="date" name="birth_date" id="birth_date" required value="<?= htmlspecialchars($student['birth_date']) ?>"
                        class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
 
             <div>
-                <label for="photo_url" class="block text-sm font-semibold text-slate-700 mb-1.5">URL de Foto de Perfil</label>
+                <label for="photo_url" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">URL de Foto de Perfil</label>
                 <input type="url" name="photo_url" id="photo_url" placeholder="https://images.unsplash.com/..." value="<?= htmlspecialchars($student['photo_url'] ?? '') ?>"
                        class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
 
             <div>
-                <label for="grade" class="block text-sm font-semibold text-slate-700 mb-1.5">Grado / Nivel</label>
+                <label for="grade" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Grado / Nivel</label>
                 <input type="text" name="grade" id="grade" placeholder="Ej. 10° Grado" value="<?= htmlspecialchars($student['grade'] ?? '') ?>"
                        class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
 
             <div>
-                <label for="gpa" class="block text-sm font-semibold text-slate-700 mb-1.5">Promedio de Notas (GPA)</label>
+                <label for="gpa" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Promedio de Notas (GPA)</label>
                 <input type="number" step="0.01" name="gpa" id="gpa" placeholder="Ej. 4.50" value="<?= htmlspecialchars($student['gpa'] ?? '0.00') ?>"
                        class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition">
             </div>
 
             <div class="md:col-span-2">
-                <label for="scalability" class="block text-sm font-semibold text-slate-700 mb-1.5">Escalabilidad / Reporte de Progreso Académico</label>
+                <label for="scalability" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Escalabilidad / Reporte de Progreso Académico</label>
                 <textarea name="scalability" id="scalability" placeholder="Anotaciones sobre metas, fortalezas y rendimiento a futuro del estudiante..." rows="3"
                           class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 text-sm font-medium transition"><?= htmlspecialchars($student['scalability'] ?? '') ?></textarea>
             </div>
         </div>
 
         <div class="pt-4 flex items-center justify-end space-x-2 border-t border-slate-100">
-            <a href="/modules/students/index.php" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm">Cancelar</a>
-            <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition text-sm shadow-md">Actualizar Matrícula</button>
+            <a href="/modules/students/index.php" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all text-sm">Cancelar</a>
+            <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">Actualizar Matrícula</button>
         </div>
     </form>
 </div>

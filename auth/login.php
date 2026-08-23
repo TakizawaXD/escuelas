@@ -12,7 +12,14 @@ if (Auth::check()) {
 }
 
 $error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$bruteForceCheck = Auth::checkBruteForce();
+
+if ($bruteForceCheck !== true) {
+    $error = $bruteForceCheck; // Mensaje de IP bloqueada
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validar CSRF Token
+    Auth::verifyCsrf($_POST['csrf_token'] ?? '');
+
     $document = Auth::sanitize($_POST['document'] ?? '');
     $password = $_POST['password'] ?? '';
 
@@ -29,11 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $stmt->fetch();
 
             if ($user && password_verify($password, $user['password'])) {
+                Auth::clearLoginAttempts(); // Resetear intentos al entrar bien
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user'] = $user;
                 header("Location: /index.php");
                 exit;
             } else {
+                Auth::recordFailedLogin(); // Registrar intento fallido
                 $error = 'Documento o contraseña incorrectos, o cuenta inactiva.';
             }
         } catch (PDOException $e) {
@@ -79,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="POST" action="" class="space-y-5">
+            <input type="hidden" name="csrf_token" value="<?= Auth::csrfToken() ?>">
             <div>
                 <label for="document" class="block text-sm font-semibold text-slate-700 mb-1.5">N° de Cédula / Documento</label>
                 <div class="relative">

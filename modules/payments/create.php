@@ -80,10 +80,13 @@ include __DIR__ . '/../../views/layout/sidebar.php';
 ?>
 
 <!-- Form -->
-<div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
+<div class="max-w-3xl mx-auto bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/60 p-8 md:p-12 relative overflow-hidden group">
+    <!-- Premium ambient background -->
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-50 pointer-events-none transition-opacity group-hover:opacity-100"></div>
+    <div class="relative z-10">
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Asignar Cobro</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">Asignar Cobro</h2>
             <p class="text-slate-500 font-medium text-sm mt-1">Cree deudas individuales o para cursos completos.</p>
         </div>
         <a href="/modules/payments/index.php" class="text-sm font-semibold text-slate-500 hover:text-slate-800 flex items-center space-x-1">
@@ -115,9 +118,9 @@ include __DIR__ . '/../../views/layout/sidebar.php';
         <!-- Student selector -->
         <div id="panel-student" class="space-y-4">
             <div>
-                <label for="student_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Estudiante *</label>
+                <label for="student_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Estudiante *</label>
                 <select name="student_id" id="student_id"
-                        class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                        class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
                     <option value="">Seleccione un estudiante...</option>
                     <?php foreach ($students as $std): ?>
                         <option value="<?= $std['id'] ?>"><?= htmlspecialchars($std['first_name'] . ' ' . $std['last_name'] . ' (' . $std['document'] . ')') ?></option>
@@ -129,9 +132,9 @@ include __DIR__ . '/../../views/layout/sidebar.php';
         <!-- Course selector -->
         <div id="panel-course" class="hidden space-y-4">
             <div>
-                <label for="course_id" class="block text-sm font-semibold text-slate-700 mb-1.5">Curso / Grado *</label>
+                <label for="course_id" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Curso / Grado *</label>
                 <select name="course_id" id="course_id"
-                        class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                        class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
                     <option value="">Seleccione un curso...</option>
                     <?php foreach ($courses as $c): ?>
                         <option value="<?= $c['id'] ?>"><?= htmlspecialchars($c['name']) ?></option>
@@ -144,27 +147,27 @@ include __DIR__ . '/../../views/layout/sidebar.php';
         <!-- Payment properties -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="md:col-span-2">
-                <label for="concept" class="block text-sm font-semibold text-slate-700 mb-1.5">Concepto del Cobro *</label>
+                <label for="concept" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Concepto del Cobro *</label>
                 <input type="text" name="concept" id="concept" required placeholder="Ej. Matrícula - Año Escolar, Pensión Mayo"
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
             </div>
 
             <div>
-                <label for="amount" class="block text-sm font-semibold text-slate-700 mb-1.5">Monto del Cobro ($) *</label>
+                <label for="amount" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Monto del Cobro ($) *</label>
                 <input type="number" step="0.01" min="0" name="amount" id="amount" required placeholder="Ej. 150000.00"
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
             </div>
 
             <div>
-                <label for="due_date" class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Vencimiento *</label>
+                <label for="due_date" class="block text-xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">Fecha de Vencimiento *</label>
                 <input type="date" name="due_date" id="due_date" required value="<?= date('Y-m-d', strtotime('+15 days')) ?>"
-                       class="block w-full px-4 py-2.5 bg-slate-50/60 border border-slate-200 text-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm font-medium transition">
+                       class="block w-full px-5 py-3.5 bg-slate-50 hover:bg-slate-100/50 focus:bg-white border border-slate-200 text-slate-800 rounded-xl outline-none text-sm font-bold transition-all shadow-inner focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
             </div>
         </div>
 
         <div class="pt-4 flex items-center justify-end space-x-2 border-t border-slate-100">
-            <a href="/modules/payments/index.php" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition text-sm">Cancelar</a>
-            <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition text-sm shadow-md">Crear Cobro</button>
+            <a href="/modules/payments/index.php" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-all text-sm">Cancelar</a>
+            <button type="submit" class="px-8 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">Crear Cobro</button>
         </div>
     </form>
 </div>

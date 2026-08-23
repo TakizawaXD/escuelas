@@ -173,6 +173,52 @@ include __DIR__ . '/../../views/layout/sidebar.php';
     </form>
 </div>
 
+<!-- Menú de Otras Configuraciones -->
+<div class="max-w-4xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 animate-fade-in">
+    <a href="/modules/settings/academic-periods.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-calendar-days text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Períodos Académicos</h3>
+        <p class="text-xs text-slate-500 mt-1">Configura semestres o bimestres.</p>
+    </a>
+    <a href="/modules/settings/grading-scale.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-chart-line text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Escalas de Calificación</h3>
+        <p class="text-xs text-slate-500 mt-1">Define métricas y puntajes.</p>
+    </a>
+    <a href="/modules/settings/email-config.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-envelope text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Configuración de Correo</h3>
+        <p class="text-xs text-slate-500 mt-1">SMTP y envíos automáticos.</p>
+    </a>
+    <a href="/modules/settings/backup.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-database text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Copias de Seguridad</h3>
+        <p class="text-xs text-slate-500 mt-1">Respaldos de la base de datos.</p>
+    </a>
+    <a href="/modules/settings/activity-logs.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-clipboard-list text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Auditoría (Logs)</h3>
+        <p class="text-xs text-slate-500 mt-1">Registro de actividades de usuarios.</p>
+    </a>
+    <a href="/modules/settings/security.php" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-indigo-300 hover:shadow-md transition group">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition">
+            <i class="fa-solid fa-shield-halved text-xl"></i>
+        </div>
+        <h3 class="font-bold text-slate-800">Seguridad</h3>
+        <p class="text-xs text-slate-500 mt-1">Bloqueos y protección 2FA.</p>
+    </a>
+</div>
+
 <?php
 include __DIR__ . '/../../views/layout/footer.php';
 ?>

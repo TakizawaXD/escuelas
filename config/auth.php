@@ -68,4 +68,73 @@ class Auth {
     public static function sanitize($data) {
         return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
     }
+
+    // --- CIBERSEGURIDAD: PREVENCIÓN CSRF ---
+    public static function csrfToken() {
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+        return $_SESSION['csrf_token'];
+    }
+
+    public static function verifyCsrf($token) {
+        if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
+            die('Error de validación CSRF. Petición rechazada por seguridad.');
+        }
+        return true;
+    }
+
+    // --- CIBERSEGURIDAD: PROTECCIÓN FUERZA BRUTA ---
+    public static function getIpAddress() {
+        return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+    }
+
+    public static function checkBruteForce() {
+        $ip = self::getIpAddress();
+        $db = Database::getInstance()->getConnection();
+        
+        $stmt = $db->prepare("SELECT attempts, last_attempt FROM login_attempts WHERE ip_address = ?");
+        $stmt->execute([$ip]);
+        $record = $stmt->fetch();
+
+        if ($record) {
+            $attempts = $record['attempts'];
+            $last_attempt = strtotime($record['last_attempt']);
+            $time_passed = time() - $last_attempt;
+            
+            // 5 intentos max. Bloqueo de 15 minutos (900 segundos)
+            if ($attempts >= 5 && $time_passed < 900) {
+                $minutes_left = ceil((900 - $time_passed) / 60);
+                return "Demasiados intentos fallidos. Tu IP ha sido bloqueada por seguridad. Intenta en {$minutes_left} minutos.";
+            } elseif ($time_passed >= 900) {
+                // Ya pasó el tiempo de castigo, limpiar
+                self::clearLoginAttempts();
+            }
+        }
+        return true;
+    }
+
+    public static function recordFailedLogin() {
+        $ip = self::getIpAddress();
+        $db = Database::getInstance()->getConnection();
+        
+        $stmt = $db->prepare("SELECT id, attempts FROM login_attempts WHERE ip_address = ?");
+        $stmt->execute([$ip]);
+        $record = $stmt->fetch();
+
+        if ($record) {
+            $stmt = $db->prepare("UPDATE login_attempts SET attempts = attempts + 1, last_attempt = CURRENT_TIMESTAMP WHERE id = ?");
+            $stmt->execute([$record['id']]);
+        } else {
+            $stmt = $db->prepare("INSERT INTO login_attempts (ip_address, attempts) VALUES (?, 1)");
+            $stmt->execute([$ip]);
+        }
+    }
+
+    public static function clearLoginAttempts() {
+        $ip = self::getIpAddress();
+        $db = Database::getInstance()->getConnection();
+        $stmt = $db->prepare("DELETE FROM login_attempts WHERE ip_address = ?");
+        $stmt->execute([$ip]);
+    }
 }

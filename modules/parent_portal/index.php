@@ -164,6 +164,70 @@ include __DIR__ . '/../../views/layout/sidebar.php';
                 </div>
             </div>
 
+            <!-- Weekly Schedule -->
+            <?php
+            $schStmt = $db->prepare("
+                SELECT sch.day_of_week, sch.start_time, sch.end_time, sub.name as subject_name,
+                       u.first_name as teacher_fn, u.last_name as teacher_ln, cl.name as classroom_name
+                FROM schedules sch
+                JOIN subjects sub ON sch.subject_id = sub.id
+                JOIN teachers t ON sch.teacher_id = t.id
+                JOIN users u ON t.user_id = u.id
+                JOIN classrooms cl ON sch.classroom_id = cl.id
+                WHERE sch.course_id = ?
+                ORDER BY sch.day_of_week ASC, sch.start_time ASC
+            ");
+            $schStmt->execute([$std['course_id']]);
+            $schRows = $schStmt->fetchAll();
+            $days = [1=>'Lun',2=>'Mar',3=>'Mié',4=>'Jue',5=>'Vie'];
+            $schGrid = [];
+            $timeSlots = [];
+            foreach ($schRows as $row) {
+                $slot = $row['start_time'] . '-' . $row['end_time'];
+                if (!in_array($slot, $timeSlots)) $timeSlots[] = $slot;
+                $schGrid[$row['day_of_week']][$slot] = $row;
+            }
+            sort($timeSlots);
+            ?>
+            <?php if (!empty($schRows)): ?>
+            <div class="border-t border-slate-100 pt-5 space-y-3">
+                <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-week text-violet-500"></i>
+                    <span>Horario Semanal de Clases</span>
+                </h4>
+                <div class="overflow-x-auto rounded-2xl border border-slate-100">
+                    <table class="min-w-full text-xs text-center border-collapse">
+                        <thead class="bg-slate-50 border-b border-slate-100">
+                            <tr>
+                                <th class="px-3 py-2.5 text-left font-extrabold uppercase tracking-widest text-slate-400 w-24">Hora</th>
+                                <?php foreach ($days as $dn): ?><th class="px-3 py-2.5 font-extrabold uppercase tracking-widest text-slate-400"><?= $dn ?></th><?php endforeach; ?>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            <?php foreach ($timeSlots as $slot): ?>
+                                <?php [$s, $e] = explode('-', $slot); ?>
+                                <tr>
+                                    <td class="px-2 py-2 text-slate-500 font-bold text-[10px] leading-snug"><?= $s ?><br><span class="text-slate-300"><?= $e ?></span></td>
+                                    <?php foreach ($days as $dn => $dLabel): ?>
+                                        <td class="px-1 py-1.5">
+                                            <?php if (isset($schGrid[$dn][$slot])): $entry = $schGrid[$dn][$slot]; ?>
+                                                <div class="rounded-lg bg-violet-50 border border-violet-100 px-2 py-1.5">
+                                                    <p class="font-extrabold text-violet-700 leading-tight"><?= htmlspecialchars($entry['subject_name']) ?></p>
+                                                    <p class="text-violet-400 text-[9px] mt-0.5"><?= htmlspecialchars($entry['classroom_name']) ?></p>
+                                                </div>
+                                            <?php else: ?>
+                                                <span class="text-slate-200">—</span>
+                                            <?php endif; ?>
+                                        </td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <?php endif; ?>
+
             <!-- Financial Report -->
             <div class="border-t border-slate-100 pt-5 space-y-4">
                 <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">

@@ -137,3 +137,15 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 INSERT INTO `users` (`id`, `role_id`, `document`, `first_name`, `last_name`, `email`, `phone`, `password`, `status`) VALUES
 (1, 1, '12345678', 'Administrador', 'General', 'admin@escuela.com', '1234567890', '$2y$10$vW90qIu7.8s268R790qGZem8X3R96S9V8Kj3I37V6A3h3S8Kj3I37', 1);
 -- The bcrypt hash matches 'admin' exactly. Let's make sure password_verify matches it correctly.
+
+-- 14. calendar_events
+CREATE TABLE IF NOT EXISTS `calendar_events` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `start_date` DATETIME NOT NULL,
+  `end_date` DATETIME,
+  `color` VARCHAR(20) DEFAULT '#4f46e5',
+  `user_id` INT,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+);

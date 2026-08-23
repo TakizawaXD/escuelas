@@ -37,18 +37,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // 35% Examen, 35% Talleres, 30% Proyecto
                 $final = ($exam * 0.35) + ($workshop * 0.35) + ($project * 0.30);
 
-                // Insert or Update ON DUPLICATE KEY
-                $stmt = $db->prepare("
-                    INSERT INTO grades (student_id, subject_id, period, exam_grade, workshop_grade, project_grade, final_grade, comments)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE 
-                        exam_grade = VALUES(exam_grade),
-                        workshop_grade = VALUES(workshop_grade),
-                        project_grade = VALUES(project_grade),
-                        final_grade = VALUES(final_grade),
-                        comments = VALUES(comments)
-                ");
-                $stmt->execute([$student_id, $subject_id, $period, $exam, $workshop, $project, $final, $comment]);
+                // SQLite-compatible: check if record exists, then update or insert
+                $checkStmt = $db->prepare("SELECT id FROM grades WHERE student_id = ? AND subject_id = ? AND period = ?");
+                $checkStmt->execute([$student_id, $subject_id, $period]);
+                $existing = $checkStmt->fetchColumn();
+
+                if ($existing) {
+                    $stmt = $db->prepare("
+                        UPDATE grades 
+                        SET exam_grade = ?, workshop_grade = ?, project_grade = ?, final_grade = ?, comments = ?
+                        WHERE id = ?
+                    ");
+                    $stmt->execute([$exam, $workshop, $project, $final, $comment, $existing]);
+                } else {
+                    $stmt = $db->prepare("
+                        INSERT INTO grades (student_id, subject_id, period, exam_grade, workshop_grade, project_grade, final_grade, comments)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ");
+                    $stmt->execute([$student_id, $subject_id, $period, $exam, $workshop, $project, $final, $comment]);
+                }
             }
             
             header("Location: /modules/grades/index.php?subject_id=$subject_id&period=$period");
