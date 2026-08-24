@@ -1,0 +1,12 @@
+{
+  "name": "escuelas-erp",
+  "version": "1.0.0",
+  "description": "Frontend and styling tools for ERP Escolar",
+  "scripts": {
+    "dev": "echo 'Using native assets. Run php -S localhost:8080'",
+    "format": "prettier --write \"**/*.js\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}

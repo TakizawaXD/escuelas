@@ -21,3 +21,17 @@ target/
 .DS_Store
 Thumbs.db
 *.log
+
+# Composer dependencies
+vendor/
+composer.phar
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# Environment configurations
+.env
+.env.local
+
+# Node.js
+node_modules/
+

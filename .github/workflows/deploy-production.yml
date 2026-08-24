@@ -1,0 +1,36 @@
+name: Deploy Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup deployment SSH
+      run: |
+        echo "Configuring SSH key authentication..."
+        # mkdir -p ~/.ssh
+        # echo "${{ secrets.PROD_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        # chmod 600 ~/.ssh/id_rsa
+        # ssh-keyscan -H ${{ secrets.PROD_SERVER_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Rsync project files
+      run: |
+        echo "Transferring files to production webroot..."
+        # rsync -avz --exclude-from='.gitignore' ./ user@${{ secrets.PROD_SERVER_HOST }}:/var/www/html/
+
+    - name: Run post-deployment hooks
+      run: |
+        echo "Running remote post-deployment updates..."
+        # ssh user@${{ secrets.PROD_SERVER_HOST }} 'cd /var/www/html && php composer.phar install --no-dev --optimize-autoloader'

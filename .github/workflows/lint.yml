@@ -1,0 +1,29 @@
+name: Lint & Style Code
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  php-cs-fixer:
+    name: PHP-CS-Fixer Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: json, mbstring
+        tools: php-cs-fixer
+
+    - name: Run style checks
+      run: php-cs-fixer fix --dry-run --diff --ansi

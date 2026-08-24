@@ -1,0 +1,15 @@
+# Disable directory listing
+Options -Indexes
+
+# Protect sensitive files in root
+<FilesMatch "^\.env|composer\.json|composer\.lock|package\.json|package-lock\.json|phpunit\.xml|pom\.xml|Dockerfile|Makefile|VERSION.txt">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Deny access to SQLite databases and log files
+RedirectMatch 403 (?i)\.(sqlite|sql|log)$
+
+# Lock down internal directories
+RewriteEngine On
+RewriteRule ^(vendor|database|logs|cache|tests|\.git|\.github)/ - [F,L]

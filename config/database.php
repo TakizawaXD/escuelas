@@ -6,7 +6,14 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $sqliteFile = __DIR__ . '/../database/escuela_erp.sqlite';
+        $config = require __DIR__ . '/app.php';
+        $dbPath = $config['db']['path'];
+
+        if (substr($dbPath, 0, 1) !== '/' && !preg_match('/^[a-zA-Z]:\\\\/', $dbPath)) {
+            $sqliteFile = __DIR__ . '/../' . $dbPath;
+        } else {
+            $sqliteFile = $dbPath;
+        }
         $schemaFile = __DIR__ . '/../database/schema_sqlite.sql';
 
         try {

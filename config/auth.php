@@ -86,7 +86,7 @@ class Auth {
 
     // --- CIBERSEGURIDAD: PROTECCIÓN FUERZA BRUTA ---
     public static function getIpAddress() {
-        return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+        return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     }
 
     public static function checkBruteForce() {

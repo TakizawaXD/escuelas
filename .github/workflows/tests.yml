@@ -1,0 +1,35 @@
+name: ERP Escolar Tests
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  php-tests:
+    name: Run PHPUnit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: pdo_sqlite, mbstring
+        coverage: none
+
+    - name: Copy Environment File
+      run: cp .env.example .env
+
+    - name: Install Composer Dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run test suite
+      run: vendor/bin/phpunit

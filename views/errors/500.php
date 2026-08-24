@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Error Interno del Servidor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen p-6">
+    <div class="max-w-md w-full text-center space-y-6">
+        <h1 class="text-9xl font-extrabold text-amber-500 tracking-widest">500</h1>
+        <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 space-y-4">
+            <h2 class="text-2xl font-bold text-slate-800">Error en el Servidor</h2>
+            <p class="text-slate-500 text-sm">Ocurrió un error inesperado al procesar tu solicitud. Por favor, inténtalo más tarde o contacta al administrador.</p>
+            <div class="pt-4">
+                <a href="/index.php" class="inline-flex items-center justify-center w-full px-6 py-3 bg-slate-900 hover:bg-black text-white font-extrabold rounded-2xl transition shadow-lg shadow-slate-900/10">
+                    Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
